@@ -28,15 +28,12 @@ jobs:
           pnpm run build
           tar -czvf dist.tar dist
       - name: Deploy 🚀 
-        uses: cross-the-world/ssh-scp-ssh-pipelines@latest
-        env:
-          WELCOME: "ssh scp ssh pipelines"
-          LASTSSH: "Doing something after copying"
+        uses: appleboy/ssh-action@master
         with:
-          host: ${{ secrets.DC_HOST }}
-          user: ${{ secrets.DC_USER }}
-          pass: ${{ secrets.DC_PASS }}
-          connect_timeout: 10s
-          first_ssh: |
+          command_timeout: 20s
+          host: ${{ secrets.USER_HOST }}
+          username: ${{ secrets.USER_NAME }}
+          password: ${{ secrets.USER_PASS }}
+          script: |
             rm -rf /home/www/website
             mkdir -p /home/www/website
