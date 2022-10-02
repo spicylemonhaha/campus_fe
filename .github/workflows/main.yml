@@ -24,10 +24,11 @@ jobs:
       - name: Install dependencies
         run: pnpm install
       - name: pnpm build
-        run: pnpm run build
-      
-      - name: deploy 
-        uses: cross-the-world/scp-pipeline@master
+        run: | 
+          pnpm run build
+          tar -czvf dist.tar dist
+      - name: Deploy 🚀 
+        uses: cross-the-world/ssh-scp-ssh-pipelines@latest
         env:
           WELCOME: "ssh scp ssh pipelines"
           LASTSSH: "Doing something after copying"
@@ -38,4 +39,13 @@ jobs:
           connect_timeout: 10s
           local: './dist/*'
           remote: /home/www/website
+          first_ssh: |
+            rm -rf /home/www/website
+            mkdir -p /home/www/website
+          scp: |
+           './dist.tar' => /home/www/website
+          last_ssh: |
+            cd /home/www/website # 切换到部署目录
+            tar -xzvf dist.tar  # 将 tar 打包文件进行解压到当前部署目录
+            
 
