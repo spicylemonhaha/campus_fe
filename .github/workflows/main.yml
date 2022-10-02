@@ -28,7 +28,7 @@ jobs:
           pnpm run build
           tar -czvf dist.tar dist
       - name: Deploy 🚀 
-        uses: cross-the-world/ssh-scp-ssh-pipelines@lastest
+        uses: cross-the-world/ssh-scp-ssh-pipelines@latest
         env:
           WELCOME: "ssh scp ssh pipelines"
           LASTSSH: "Doing something after copying"
