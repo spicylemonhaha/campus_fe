@@ -26,14 +26,18 @@ jobs:
       - name: pnpm build
         run: | 
           pnpm run build
-          tar -czvf dist.tar dist
+          tar -czvf dist.tar dist # 目标文件进行打包
       - name: Deploy 🚀 
-        uses: appleboy/ssh-action@master
+        uses: cross-the-world/ssh-scp-ssh-pipelines@latest # 因为构建之后，需要把代码上传到服务器上，所以需要连接到ssh，并且做一个安全拷贝(security copy)操作
+        env:
+          WELCOME: "ssh scp ssh pipelines"
+          LASTSSH: "Doing something after copying"
         with:
           command_timeout: 20s
           host: ${{ secrets.USER_HOST }}
-          username: ${{ secrets.USER_NAME }}
-          password: ${{ secrets.USER_PASS }}
-          script: |
+          user: ${{ secrets.USER_NAME }}
+          pass: ${{ secrets.USER_PASS }}
+          first_ssh: |
             rm -rf /home/www/website
-            mkdir -p /home/www/website
+            mkdir -p /home/www/websit
+            
