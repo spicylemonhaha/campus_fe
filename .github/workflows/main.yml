@@ -41,8 +41,4 @@ jobs:
             rm -rf /home/www/website
             mkdir -p /home/www/website
           scp: |
-           './dist.tar' => /home/www/website
-          last_ssh: |
-            cd /home/www/website # 切换到部署目录
-            tar -xzvf dist.tar  # 将 tar 打包文件进行解压到当前部署目录
-            
+           './dist' => /home/www/website
