@@ -28,7 +28,7 @@ jobs:
           pnpm run build
           tar -czvf dist.tar dist
       - name: Deploy 🚀 
-        uses: cross-the-world/ssh-scp-ssh-pipelines@latest
+        uses: cross-the-world/ssh-scp-ssh-pipelines@1.1.4
         env:
           WELCOME: "ssh scp ssh pipelines"
           LASTSSH: "Doing something after copying"
@@ -37,13 +37,3 @@ jobs:
           user: ${{ secrets.USER_NAME }}
           pass: ${{ secrets.USER_PASS }}
           connect_timeout: 10s
-          first_ssh: |
-            rm -rf /home/www/website
-            mkdir -p /home/www/website
-          scp: |
-           './dist.tar' => /home/www/website
-          last_ssh: |
-            cd /home/www/website # 切换到部署目录
-            tar -xzvf dist.tar  # 将 tar 打包文件进行解压到当前部署目录
-            
-
